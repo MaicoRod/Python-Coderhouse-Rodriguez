@@ -1,0 +1,53 @@
+{% extends 'diario/base.html' %}
+
+{% block title %}Mis Entradas{% endblock %}
+
+{% block content %}
+<h1>Mis Entradas de Gratitud</h1>
+
+<h2>Nueva entrada</h2>
+<form method="POST">
+    {% csrf_token %}
+    <p>
+        <label>Título:</label><br>
+        {{ form.titulo }}
+    </p>
+    <p>
+        <label>¿Por qué estoy agradecido?:</label><br>
+        {{ form.descripcion }}
+    </p>
+    <p>
+        <label>¿Cómo me siento?:</label><br>
+        {{ form.emocion }}
+    </p>
+    <p>
+        <label>Categoría:</label><br>
+        {{ form.categoria }}
+    </p>
+    <button type="submit">Guardar Entrada</button>
+</form>
+
+<hr>
+
+<h2>Todas mis entradas ({{ entradas|length }})</h2>
+{% if entradas %}
+    <table>
+        <tr>
+            <th>Título</th>
+            <th>Emoción</th>
+            <th>Categoría</th>
+            <th>Fecha</th>
+        </tr>
+        {% for entrada in entradas %}
+        <tr>
+            <td>{{ entrada.titulo }}</td>
+            <td>{{ entrada.emocion.nombre }}</td>
+            <td>{{ entrada.categoria.nombre }}</td>
+            <td>{{ entrada.fecha_creacion|date:"d/m/Y H:i" }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>No hay entradas todavía.</p>
+{% endif %}
+{% endblock %}

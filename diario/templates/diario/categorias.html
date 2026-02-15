@@ -1,0 +1,41 @@
+{% extends 'diario/base.html' %}
+
+{% block title %}Categorías{% endblock %}
+
+{% block content %}
+<h1>Categorías</h1>
+
+<h2>Crear nueva categoría</h2>
+<form method="POST">
+    {% csrf_token %}
+    <p>
+        <label>Nombre:</label><br>
+        {{ form.nombre }}
+    </p>
+    <p>
+        <label>Descripción:</label><br>
+        {{ form.descripcion }}
+    </p>
+    <button type="submit">Crear Categoría</button>
+</form>
+
+<hr>
+
+<h2>Categorías creadas ({{ categorias|length }})</h2>
+{% if categorias %}
+    <table>
+        <tr>
+            <th>Nombre</th>
+            <th>Descripción</th>
+        </tr>
+        {% for categoria in categorias %}
+        <tr>
+            <td>{{ categoria.nombre }}</td>
+            <td>{{ categoria.descripcion }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>No hay categorías. Ejemplos: Familia, Trabajo, Salud, Amistad, Logros personales</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'diario/base.html' %}
+
+{% block title %}Inicio - Diario de Gratitud{% endblock %}
+
+{% block content %}
+<h1>Diario de Gratitud Express</h1>
+<p>Bienvenido a tu espacio personal para practicar la gratitud y manejar la ansiedad</p>
+
+<h3>Estadísticas:</h3>
+<ul>
+    <li>Total de entradas: {{ total_entradas }}</li>
+    <li>Emociones registradas: {{ total_emociones }}</li>
+    <li>Categorías: {{ total_categorias }}</li>
+</ul>
+
+<h3>Tus últimas entradas:</h3>
+{% if entradas_recientes %}
+    <ul>
+        {% for entrada in entradas_recientes %}
+        <li>
+            <strong>{{ entrada.titulo }}</strong>
+            <br>{{ entrada.descripcion|truncatewords:15 }}
+            <br><small>Emoción: {{ entrada.emocion.nombre }} | {{ entrada.fecha_creacion|date:"d/m/Y" }}</small>
+        </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Aún no tienes entradas. ¡Comienza tu diario!</p>
+{% endif %}
+{% endblock %}

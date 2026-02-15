@@ -1,0 +1,41 @@
+{% extends 'diario/base.html' %}
+
+{% block title %}Emociones{% endblock %}
+
+{% block content %}
+<h1>Mis Emociones</h1>
+
+<h2>Registrar nueva emoción</h2>
+<form method="POST">
+    {% csrf_token %}
+    <p>
+        <label>Nombre:</label><br>
+        {{ form.nombre }}
+    </p>
+    <p>
+        <label>Descripción:</label><br>
+        {{ form.descripcion }}
+    </p>
+    <button type="submit">Guardar Emoción</button>
+</form>
+
+<hr>
+
+<h2>Emociones registradas ({{ emociones|length }})</h2>
+{% if emociones %}
+    <table>
+        <tr>
+            <th>Nombre</th>
+            <th>Descripción</th>
+        </tr>
+        {% for emocion in emociones %}
+        <tr>
+            <td>{{ emocion.nombre }}</td>
+            <td>{{ emocion.descripcion }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>No hay emociones registradas. Ejemplos: Feliz, Tranquilo, Agradecido, Esperanzado</p>
+{% endif %}
+{% endblock %}

@@ -45,7 +45,7 @@ def emociones(request):
     else:
         form = EmocionForm()
 
-    # ESTAS LÍNEAS DEBEN TENER 4 ESPACIOS DE SANGRÍA
+    
     emociones_lista = Emocion.objects.all()
     return render(request, 'diario/emociones.html', {
         'form': form,

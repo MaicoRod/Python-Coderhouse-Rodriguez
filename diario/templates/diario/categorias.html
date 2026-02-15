@@ -1,41 +1,35 @@
 {% extends 'diario/base.html' %}
 
-{% block title %}Categorías{% endblock %}
+{% block title %}Categorias{% endblock %}
 
 {% block content %}
-<h1>Categorías</h1>
+<h1>Categorias</h1>
 
-<h2>Crear nueva categoría</h2>
+<h3>Crear nueva categoria</h3>
 <form method="POST">
     {% csrf_token %}
-    <p>
-        <label>Nombre:</label><br>
-        {{ form.nombre }}
-    </p>
-    <p>
-        <label>Descripción:</label><br>
-        {{ form.descripcion }}
-    </p>
-    <button type="submit">Crear Categoría</button>
+    
+    <p>Nombre:<br>
+    {{ form.nombre }}</p>
+    
+    <p>Descripcion:<br>
+    {{ form.descripcion }}</p>
+    
+    <button type="submit">Crear</button>
 </form>
 
 <hr>
 
-<h2>Categorías creadas ({{ categorias|length }})</h2>
+<h3>Categorias creadas ({{ categorias|length }})</h3>
 {% if categorias %}
-    <table>
-        <tr>
-            <th>Nombre</th>
-            <th>Descripción</th>
-        </tr>
-        {% for categoria in categorias %}
-        <tr>
-            <td>{{ categoria.nombre }}</td>
-            <td>{{ categoria.descripcion }}</td>
-        </tr>
-        {% endfor %}
-    </table>
+    {% for categoria in categorias %}
+    <p>
+        <strong>{{ categoria.nombre }}</strong><br>
+        {{ categoria.descripcion }}
+    </p>
+    {% endfor %}
 {% else %}
-    <p>No hay categorías. Ejemplos: Familia, Trabajo, Salud, Amistad, Logros personales</p>
+    <p>No hay categorias.</p>
+    <p>Ejemplos: Familia, Trabajo, Salud, Amistad, Logros</p>
 {% endif %}
 {% endblock %}

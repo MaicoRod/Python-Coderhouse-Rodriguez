@@ -10,11 +10,25 @@ def inicio(request):
     total_emociones = Emocion.objects.count()
     total_categorias = Categoria.objects.count()
 
+    resultados = []
+    busqueda = request.GET.get('buscar', '')
+    if busqueda:
+        resultados = EntradaGratitud.objects.filter(
+            titulo__icontains=busqueda
+        ) | EntradaGratitud.objects.filter(
+            descripcion__icontains=busqueda
+        ) | EntradaGratitud.objects.filter(
+            emocion__nombre__icontains=busqueda
+        ) | EntradaGratitud.objects.filter(
+            categoria__nombre__icontains=busqueda
+        )
+
     return render(request, 'diario/index.html', { 
         'entradas_recientes': entradas_recientes,
         'total_entradas': total_entradas,
         'total_emociones': total_emociones,
         'total_categorias': total_categorias,
+        'resultados': resultados,
     })
 
 def entradas(request):
@@ -70,19 +84,6 @@ def categorias(request):
         'categorias': categorias_lista,
     })
 
-def buscar(request):
 
-    form = BusquedaForm(request.GET)
-    resultados = []
-
-    if form.is_valid():
-        busqueda = form.cleaned_data.get('buscar')
-        if busqueda:
-            resultados = EntradaGratitud.objects.filter(titulo__icontains=busqueda)
-
-    return render(request, 'diario/buscar.html', {
-        'form': form,
-        'resultados': resultados,
-    })
 
 

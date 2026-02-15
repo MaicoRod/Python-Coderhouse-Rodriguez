@@ -1,30 +1,55 @@
 {% extends 'diario/base.html' %}
 
-{% block title %}Inicio - Diario de Gratitud{% endblock %}
+{% block title %}Inicio{% endblock %}
 
 {% block content %}
-<h1>Diario de Gratitud Express</h1>
-<p>Bienvenido a tu espacio personal para practicar la gratitud y manejar la ansiedad</p>
+<h1>Bienvenido a tu Diario de Gratitud</h1>
 
-<h3>Estadísticas:</h3>
+<p>Un espacio para practicar la gratitud y manejar la ansiedad</p>
+
+<h3>Buscar entradas:</h3>
+<form method="GET">
+    Buscar: <input type="text" name="buscar" value="{{ request.GET.buscar }}">
+    <button type="submit">Buscar</button>
+</form>
+
+{% if request.GET.buscar %}
+    <h4>Resultados para: "{{ request.GET.buscar }}"</h4>
+    {% if resultados %}
+        <p>Se encontraron {{ resultados|length }} entrada(s)</p>
+        {% for entrada in resultados %}
+        <p>
+            <strong>{{ entrada.titulo }}</strong><br>
+            {{ entrada.descripcion }}<br>
+            Emocion: {{ entrada.emocion.nombre }}<br>
+            <small>{{ entrada.fecha_creacion|date:"d/m/Y" }}</small>
+        </p>
+        <hr>
+        {% endfor %}
+    {% else %}
+        <p>No se encontraron resultados.</p>
+    {% endif %}
+{% endif %}
+
+<hr>
+
+<h3>Estadisticas:</h3>
 <ul>
     <li>Total de entradas: {{ total_entradas }}</li>
-    <li>Emociones registradas: {{ total_emociones }}</li>
-    <li>Categorías: {{ total_categorias }}</li>
+    <li>Emociones: {{ total_emociones }}</li>
+    <li>Categorias: {{ total_categorias }}</li>
 </ul>
 
-<h3>Tus últimas entradas:</h3>
+<h3>Ultimas entradas:</h3>
 {% if entradas_recientes %}
-    <ul>
-        {% for entrada in entradas_recientes %}
-        <li>
-            <strong>{{ entrada.titulo }}</strong>
-            <br>{{ entrada.descripcion|truncatewords:15 }}
-            <br><small>Emoción: {{ entrada.emocion.nombre }} | {{ entrada.fecha_creacion|date:"d/m/Y" }}</small>
-        </li>
-        {% endfor %}
-    </ul>
+    {% for entrada in entradas_recientes %}
+    <p>
+        <strong>{{ entrada.titulo }}</strong><br>
+        {{ entrada.descripcion|truncatewords:10 }}<br>
+        <small>{{ entrada.fecha_creacion|date:"d/m/Y" }} - {{ entrada.emocion.nombre }}</small>
+    </p>
+    {% endfor %}
 {% else %}
-    <p>Aún no tienes entradas. ¡Comienza tu diario!</p>
+    <p>No hay entradas ¡Comienza tu diario!</p>
 {% endif %}
 {% endblock %}

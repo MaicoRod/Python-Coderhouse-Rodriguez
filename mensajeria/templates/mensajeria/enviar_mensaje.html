@@ -1,0 +1,23 @@
+{% extends 'diario/base.html' %}
+
+{% block title %}Enviar Mensaje{% endblock %}
+
+{% block content %}
+<h1>✉️ Enviar Mensaje</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    
+    <p>Para:<br>
+    {{ form.destinatario }}</p>
+    
+    <p>Asunto:<br>
+    {{ form.asunto }}</p>
+    
+    <p>Mensaje:<br>
+    {{ form.contenido }}</p>
+    
+    <button type="submit">📨 Enviar</button>
+    <a href="{% url 'mensajes' %}" class="boton" style="background: #6c757d;">❌ Cancelar</a>
+</form>
+{% endblock %}

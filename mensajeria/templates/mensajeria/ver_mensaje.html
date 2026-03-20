@@ -1,0 +1,28 @@
+{% extends 'diario/base.html' %}
+
+{% block title %}{{ mensaje.asunto }}{% endblock %}
+
+{% block content %}
+<h1>{{ mensaje.asunto }}</h1>
+
+<p><strong>De:</strong> {{ mensaje.remitente.username }}</p>
+<p><strong>Para:</strong> {{ mensaje.destinatario.username }}</p>
+<p><strong>Fecha:</strong> {{ mensaje.fecha_envio|date:"d/m/Y H:i" }}</p>
+
+<hr>
+
+<div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 20px 0;">
+    {{ mensaje.contenido|linebreaks }}
+</div>
+
+<hr>
+
+<p>
+    <a href="{% url 'mensajes' %}" class="boton">⬅️ Volver a mensajes</a>
+    <a href="{% url 'eliminar_mensaje' mensaje.pk %}" class="boton" style="background: #dc3545;">🗑️ Eliminar</a>
+    
+    {% if mensaje.destinatario == user %}
+        <a href="{% url 'enviar_mensaje' %}" class="boton">↩️ Responder</a>
+    {% endif %}
+</p>
+{% endblock %}

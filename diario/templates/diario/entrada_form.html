@@ -1,0 +1,36 @@
+{% extends 'diario/base.html' %}
+
+{% block title %}
+    {% if object %}Editar Entrada{% else %}Nueva Entrada{% endif %}
+{% endblock %}
+
+{% block content %}
+<h1>{% if object %}✏️ Editar Entrada{% else %}➕ Nueva Entrada de Gratitud{% endif %}</h1>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <p>Título:<br>
+    {{ form.titulo }}</p>
+    
+    <p>Subtítulo (opcional):<br>
+    {{ form.subtitulo }}</p>
+    
+    <p>¿Por qué estoy agradecido?:<br>
+    {{ form.descripcion }}</p>
+    
+    <p>Imagen (opcional):<br>
+    {{ form.imagen }}</p>
+    
+    <p>¿Cómo me siento?:<br>
+    {{ form.emocion }}</p>
+    
+    <p>Categoría:<br>
+    {{ form.categoria }}</p>
+    
+    <button type="submit">💾 Guardar</button>
+    <a href="{% url 'entrada_list' %}" class="boton" style="background: #6c757d;">❌ Cancelar</a>
+</form>
+
+{{ form.media }}
+{% endblock %}

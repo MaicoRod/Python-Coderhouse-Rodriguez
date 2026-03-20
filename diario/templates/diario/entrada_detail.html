@@ -1,0 +1,37 @@
+{% extends 'diario/base.html' %}
+
+{% block title %}{{ entrada.titulo }}{% endblock %}
+
+{% block content %}
+<h1>{{ entrada.titulo }}</h1>
+
+{% if entrada.subtitulo %}
+    <h3>{{ entrada.subtitulo }}</h3>
+{% endif %}
+
+{% if entrada.imagen %}
+    <img src="{{ entrada.imagen.url }}" alt="{{ entrada.titulo }}" width="400">
+{% endif %}
+
+<p><strong>👤 Autor:</strong> {{ entrada.autor.username }}</p>
+<p><strong>📅 Fecha:</strong> {{ entrada.fecha_creacion|date:"d/m/Y H:i" }}</p>
+<p><strong>😊 Emoción:</strong> {{ entrada.emocion.nombre }}</p>
+<p><strong>📂 Categoría:</strong> {{ entrada.categoria.nombre }}</p>
+
+<hr>
+
+<div>
+    {{ entrada.descripcion|safe }}
+</div>
+
+<hr>
+
+<p>
+    <a href="{% url 'entrada_list' %}" class="boton">⬅️ Volver a la lista</a>
+    
+    {% if user == entrada.autor %}
+        <a href="{% url 'entrada_update' entrada.pk %}" class="boton">✏️ Editar</a>
+        <a href="{% url 'entrada_delete' entrada.pk %}" class="boton" style="background: #dc3545;">🗑️ Borrar</a>
+    {% endif %}
+</p>
+{% endblock %}

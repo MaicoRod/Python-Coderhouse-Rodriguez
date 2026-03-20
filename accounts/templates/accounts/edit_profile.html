@@ -1,0 +1,40 @@
+{% extends 'diario/base.html' %}
+
+{% block title %}Editar Perfil{% endblock %}
+
+{% block content %}
+<h1>✏️ Editar Perfil</h1>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <h3>📋 Datos Personales</h3>
+    
+    <p>Nombre:<br>
+    {{ form.first_name }}</p>
+    
+    <p>Apellido:<br>
+    {{ form.last_name }}</p>
+    
+    <p>Email:<br>
+    {{ form.email }}</p>
+    
+    <h3>👤 Perfil</h3>
+    
+    <p>Avatar:<br>
+    {{ form.avatar }}
+    {% if form.instance.avatar %}
+        <br><img src="{{ form.instance.avatar.url }}" width="100" style="border-radius: 50%; margin-top: 10px;">
+    {% endif %}
+    </p>
+    
+    <p>Biografía:<br>
+    {{ form.biografia }}</p>
+    
+    <p>Fecha de nacimiento:<br>
+    {{ form.fecha_nacimiento }}</p>
+    
+    <button type="submit">💾 Guardar Cambios</button>
+    <a href="{% url 'profile' %}" class="boton" style="background: #6c757d;">❌ Cancelar</a>
+</form>
+{% endblock %}

@@ -1,4 +1,30 @@
-venv/
-*.pyc
+"""
+# Python
 __pycache__/
+*.pyc
+*.pyo
+*.py[cod]
+
+# Django
 db.sqlite3
+*.log
+local_settings.py
+
+# Media y estáticos
+media/
+
+# Entorno virtual
+venv/
+env/
+ENV/
+.venv
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+
+# Sistema
+.DS_Store
+Thumbs.db
+"""

@@ -1,0 +1,20 @@
+{% extends 'diario/base.html' %}
+
+{% block title %}Borrar Entrada{% endblock %}
+
+{% block content %}
+<h1>🗑️ ¿Borrar esta entrada?</h1>
+
+<div class="entrada-card">
+    <h3>{{ object.titulo }}</h3>
+    <p>{{ object.descripcion|striptags|truncatewords:30 }}</p>
+</div>
+
+<p style="color: #dc3545;"><strong>⚠️ Esta acción no se puede deshacer.</strong></p>
+
+<form method="POST">
+    {% csrf_token %}
+    <button type="submit" style="background: #dc3545;">✅ Sí, borrar</button>
+    <a href="{% url 'entrada_list' %}" class="boton" style="background: #6c757d;">❌ No, cancelar</a>
+</form>
+{% endblock %}

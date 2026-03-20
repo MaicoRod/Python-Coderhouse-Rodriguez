@@ -1,0 +1,25 @@
+{% extends 'diario/base.html' %}
+
+{% block title %}Iniciar Sesión{% endblock %}
+
+{% block content %}
+<h1>🔐 Iniciar Sesión</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    
+    <p>Nombre de usuario:<br>
+    {{ form.username }}</p>
+    
+    <p>Contraseña:<br>
+    {{ form.password }}</p>
+    
+    {% if form.errors %}
+        <p style="color: red;">Usuario o contraseña incorrectos</p>
+    {% endif %}
+    
+    <button type="submit">✅ Entrar</button>
+</form>
+
+<p>¿No tienes cuenta? <a href="{% url 'register' %}">Regístrate aquí</a></p>
+{% endblock %}

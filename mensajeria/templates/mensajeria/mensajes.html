@@ -1,0 +1,74 @@
+{% extends 'diario/base.html' %}
+
+{% block title %}Mensajes{% endblock %}
+
+{% block content %}
+<h1>💬 Mis Mensajes</h1>
+
+<p><a href="{% url 'enviar_mensaje' %}" class="boton">➕ Nuevo Mensaje</a></p>
+
+{% if no_leidos > 0 %}
+    <p style="background: #fff3cd; padding: 10px; border-radius: 5px; border-left: 4px solid #ffc107;">
+        <strong>📬 Tienes {{ no_leidos }} mensaje(s) sin leer</strong>
+    </p>
+{% endif %}
+
+<hr>
+
+<h2>📥 Mensajes Recibidos ({{ mensajes_recibidos|length }})</h2>
+
+{% if mensajes_recibidos %}
+    {% for mensaje in mensajes_recibidos %}
+    <div class="entrada-card" {% if not mensaje.leido %}style="border-left: 4px solid #ffc107;"{% endif %}>
+        {% if not mensaje.leido %}
+            <strong style="color: #ffc107;">✉️ [NUEVO]</strong>
+        {% endif %}
+        
+        <p>
+            <strong>De:</strong> {{ mensaje.remitente.username }}<br>
+            <strong>Asunto:</strong> {{ mensaje.asunto }}<br>
+            <strong>Fecha:</strong> {{ mensaje.fecha_envio|date:"d/m/Y H:i" }}
+        </p>
+        
+        <p>{{ mensaje.contenido|truncatewords:15 }}</p>
+        
+        <p>
+            <a href="{% url 'ver_mensaje' mensaje.pk %}" class="boton">👁️ Leer</a>
+            <a href="{% url 'eliminar_mensaje' mensaje.pk %}" class="boton" style="background: #dc3545;">🗑️ Eliminar</a>
+        </p>
+    </div>
+    {% endfor %}
+{% else %}
+    <p>No tienes mensajes recibidos</p>
+{% endif %}
+
+<hr>
+
+<h2>📤 Mensajes Enviados ({{ mensajes_enviados|length }})</h2>
+
+{% if mensajes_enviados %}
+    {% for mensaje in mensajes_enviados %}
+    <div class="entrada-card">
+        <p>
+            <strong>Para:</strong> {{ mensaje.destinatario.username }}<br>
+            <strong>Asunto:</strong> {{ mensaje.asunto }}<br>
+            <strong>Fecha:</strong> {{ mensaje.fecha_envio|date:"d/m/Y H:i" }}
+            {% if mensaje.leido %}
+                <em>(✅ Leído)</em>
+            {% else %}
+                <em>(📭 No leído)</em>
+            {% endif %}
+        </p>
+        
+        <p>{{ mensaje.contenido|truncatewords:15 }}</p>
+        
+        <p>
+            <a href="{% url 'ver_mensaje' mensaje.pk %}" class="boton">👁️ Ver</a>
+            <a href="{% url 'eliminar_mensaje' mensaje.pk %}" class="boton" style="background: #dc3545;">🗑️ Eliminar</a>
+        </p>
+    </div>
+    {% endfor %}
+{% else %}
+    <p>No has enviado mensajes</p>
+{% endif %}
+{% endblock %}

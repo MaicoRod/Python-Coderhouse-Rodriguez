@@ -1,43 +1,51 @@
 {% extends 'diario/base.html' %}
 
-{% block title %}Mis Entradas{% endblock %}
+{% block title %}Entradas{% endblock %}
 
 {% block content %}
-<h1>Mis Entradas de Gratitud</h1>
+<h1>📚 Todas las Entradas de Gratitud</h1>
 
-<h3>Nueva entrada</h3>
-<form method="POST">
-    {% csrf_token %}
-    
-    <p>Titulo:<br>
-    {{ form.titulo }}</p>
-    
-    <p>¿Por que estoy agradecido?:<br>
-    {{ form.descripcion }}</p>
-    
-    <p>Como me siento?:<br>
-    {{ form.emocion }}</p>
-    
-    <p>Categoria:<br>
-    {{ form.categoria }}</p>
-    
-    <button type="submit">Guardar</button>
-</form>
+{% if user.is_authenticated %}
+    <p><a href="{% url 'entrada_create' %}" class="boton">➕ Crear Nueva Entrada</a></p>
+{% endif %}
 
 <hr>
 
-<h3>Todas mis entradas ({{ entradas|length }})</h3>
 {% if entradas %}
     {% for entrada in entradas %}
-    <p>
-        <strong>{{ entrada.titulo }}</strong><br>
-        {{ entrada.descripcion }}<br>
-        Emocion: {{ entrada.emocion.nombre }} | Categoria: {{ entrada.categoria.nombre }}<br>
-        <small>{{ entrada.fecha_creacion|date:"d/m/Y H:i" }}</small>
-    </p>
-    <hr>
+    <div class="entrada-card">
+        <h3>{{ entrada.titulo }}</h3>
+        
+        {% if entrada.imagen %}
+            <img src="{{ entrada.imagen.url }}" alt="{{ entrada.titulo }}" width="300">
+        {% endif %}
+        
+        <p>{{ entrada.descripcion|striptags|truncatewords:20 }}</p>
+        <p>
+            <small>
+                👤 Por {{ entrada.autor.username }} | 
+                📅 {{ entrada.fecha_creacion|date:"d/m/Y" }} |
+                😊 {{ entrada.emocion.nombre }}
+            </small>
+        </p>
+        
+        <p>
+            <a href="{% url 'entrada_detail' entrada.pk %}" class="boton">👁️ Leer más</a>
+            
+            {% if user == entrada.autor %}
+                <a href="{% url 'entrada_update' entrada.pk %}" class="boton">✏️ Editar</a>
+                <a href="{% url 'entrada_delete' entrada.pk %}" class="boton" style="background: #dc3545;">🗑️ Borrar</a>
+            {% endif %}
+        </p>
+    </div>
     {% endfor %}
 {% else %}
-    <p>No hay entradas todavia.</p>
+    <div style="text-align: center; padding: 40px; color: #999;">
+        <p style="font-size: 48px;">📝</p>
+        <p>No hay entradas aún.</p>
+        {% if user.is_authenticated %}
+            <p><a href="{% url 'entrada_create' %}" class="boton">¡Crea la primera!</a></p>
+        {% endif %}
+    </div>
 {% endif %}
 {% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'diario/base.html' %}
+
+{% block title %}Acerca de mí{% endblock %}
+
+{% block content %}
+<h1>💜 Acerca de mí</h1>
+
+<div style="background: #f8f9fa; padding: 25px; border-radius: 10px; margin: 20px 0; border-left: 4px solid #667eea;">
+    <p><strong>👤 Nombre:</strong> Maico Rodríguez</p>
+    <p><strong>🎂 Edad:</strong> 25 años</p>
+    <p><strong>💼 Trabajo:</strong> E-commerce</p>
+    <p><strong>📧 Email:</strong> maicoerodriguez@gmail.com</p>
+    <p><strong>🎓 Curso:</strong> Python - Coderhouse 2025-2026</p>
+</div>
+
+<h3>✨ ¿Por qué este proyecto?</h3>
+<p>
+    Este es mi proyecto final del curso de Python en Coderhouse.
+    Se trata de un <strong>Diario de Gratitud Express</strong>, una aplicación web 
+    creada especialmente para personas ansiosas como yo, que vivimos en <em>modo supervivencia</em> todo el tiempo.
+</p>
+
+<p>
+    Cuando estamos constantemente preocupados por el futuro o sobrepasados por las tareas del día a día,
+    es muy fácil olvidar que también tenemos muchas cosas por agradecer, por más pequeñas que sean.
+</p>
+
+<p>
+    Este diario es un espacio para <strong>pausar, respirar y reconocer lo bueno</strong> que nos pasa,
+    aunque sean cosas simples como un café por la mañana, una conversación con un amigo,
+    o simplemente haber llegado al final del día.
+</p>
+
+<h3>💭 La idea</h3>
+<p>
+    A veces nos enfocamos tanto en lo que falta, en lo que salió mal o en lo que tenemos que hacer,
+    que perdemos de vista todo lo que sí está funcionando en nuestra vida.
+</p>
+
+<p>
+    Este diario es una herramienta para <strong>entrenar nuestra mente</strong> a notar y valorar
+    esos momentos de gratitud, ayudándonos a salir un poco del piloto automático
+    y recordar que no todo es urgente, no todo es una crisis, y que está bien tomarse un momento
+    para apreciar lo que tenemos.
+</p>
+
+<h3>🌱 Para quién es</h3>
+<p>
+    Para personas como yo:
+</p>
+<ul>
+    <li>Que viven constantemente preocupadas o ansiosas</li>
+    <li>Que sienten que nunca es suficiente</li>
+    <li>Que están siempre en "modo supervivencia"</li>
+    <li>Que necesitan recordar las cosas buenas de la vida</li>
+    <li>Que quieren cultivar una mentalidad más positiva</li>
+</ul>
+
+<p style="margin-top: 30px; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 10px; text-align: center;">
+    <strong>Si llegaste hasta acá, gracias por tomarte el tiempo de leer. 💜</strong><br>
+    Espero que este proyecto te sirva tanto como me sirvió a mí crearlo.
+</p>
+
+<p style="text-align: center; margin-top: 20px;">
+    <a href="{% url 'inicio' %}" class="boton">🏠 Volver al inicio</a>
+</p>
+{% endblock %}
